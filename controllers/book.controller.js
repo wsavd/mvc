@@ -2,7 +2,9 @@ var Book = require('../models/book.model');
 
 //all books
 module.exports.book_list = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: Book list');
+    Book.find({}, function(err, results){
+    res.json(results);
+  });
 };
 
 //page for a specific book
