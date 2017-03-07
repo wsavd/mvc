@@ -9,7 +9,9 @@ module.exports.book_list = function(req, res, next) {
 
 //page for a specific book
 module.exports.book_detail = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: Book detail: ' + req.params.id);
+    Book.findOne({_id: req.params.id}, function(err, results) {
+      res.json(results)
+});
 };
 
 //book create form on GET
@@ -18,14 +20,42 @@ module.exports.book_create_get = function(req, res, next) {
 };
 //book create on POST
 module.exports.book_create_post = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: Book create POST');
-};
+    var newBook = new Book();
 
+  		newBook.title = req.body.title;
+  		newBook.author = req.body.author;
+  		newBook.genre = req.body.category;
+
+  		newBook.save(function(err, results) {
+    	if(err) {
+      	res.send('error saving book');
+    	} else {
+      	res.json(results)
+          };
+        });
+};
+/*
 //book update
 module.exports.book_update_put = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: BOOK update PUT: ');
+    var query = {_id: [req.params.id]};
+	var body = req.body;
+	Book.update(query, {$set:body}, {}, function(err, movie){
+		if(err){
+			res.send(err);
+		}
+		res.json(movie);
+	});
 };
 
-module.exports.book_delete_delete = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: BOOK update PUT: ' + req.params.id);
-}
+module.exports.book_delete_delete = function(req, res, next){
+	var query = {_id: [req.params.id]};
+	Book.remove(query, function(err){
+		if(err){
+			res.send(err);
+		}
+		res.json({
+			msg:"Success"
+		});
+	});
+};
+*/
