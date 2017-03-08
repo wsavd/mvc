@@ -34,16 +34,15 @@ module.exports.book_create_post = function(req, res, next) {
           };
         });
 };
-/*
 //book update
 module.exports.book_update_put = function(req, res, next) {
     var query = {_id: [req.params.id]};
 	var body = req.body;
-	Book.update(query, {$set:body}, {}, function(err, movie){
+	Book.update(query, {$set:body}, {}, function(err, Book){
 		if(err){
 			res.send(err);
 		}
-		res.json(movie);
+		res.json(Book);
 	});
 };
 
@@ -58,4 +57,3 @@ module.exports.book_delete_delete = function(req, res, next){
 		});
 	});
 };
-*/
