@@ -15,8 +15,8 @@ router.get('/books/create', book_controller.book_create_get);
 // POST request for creating Book
 router.post('/books/create', book_controller.book_create_post);
 
-router.delete('book/:id', book_controller.book_delete_delete);
+router.delete('/book/:id', book_controller.book_delete_delete);
 
-router.put('book/:id', book_controller.book_update_put);
+router.put('/book/:id', book_controller.book_update_put);
 
 module.exports = router;
