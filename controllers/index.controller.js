@@ -2,6 +2,7 @@ var User = require('../models/user.model');
 var Comment = require('../models/comment.model');
 var Post = require('../models/post.model');
 
+//возвращает созданную запись
 module.exports.userCreate = function(req, res) {
     var user = new User();
 
@@ -19,24 +20,28 @@ module.exports.userCreate = function(req, res) {
 
 module.exports.commentCreate = function(req, res) {
     var comment = new Comment();
-
+		
+		comment.post = req.body.postId;
   		comment.text = req.body.text;//значение поля формы
 		comment.created_by = req.body.userId;//req.user.id
-		var query = {_id: [req.body.postId]};
+		//var query = {_id: [req.body.postId]};
 		//console.log(query);
 		
-  		comment.save().then(function (results) {
-			Post.update(query, { $push:{'comments': results._id},  }, {}).then(function(results) {
-				res.json(results);
+  		comment.save().then(function (saved) {
+			Post.findByIdAndUpdate(req.body.postId, { $push:{'comments': saved._id},  }).then(function(results) {
+				res.json({
+					postData: comment,
+					results
+				});
 			})
         });
 };
+//возвращает созданную запись
 module.exports.postCreate = function(req, res) {
     var post = new Post();
 
   		post.title = req.body.title;
 		post.created_by = req.body.userId;
-		post.comments = req.body.commentId;
 
   		post.save(function(err, results) {
     	if(err) {
@@ -50,8 +55,11 @@ module.exports.postCreate = function(req, res) {
 module.exports.commentsByUser = function(req, res, next) {
     Post.find({}).populate({
 		path: 'comments',
-		model: 'Comment',
-		select: 'text'
+		select: '-_id -post',
+		populate: {
+			path: 'created_by',
+			select: '-_id'
+		}
 	}).exec(function(err, items) {
     	res.json(items);
   });

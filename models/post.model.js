@@ -5,12 +5,10 @@ var Schema = mongoose.Schema;
 var PostSchema = new Schema({
     title: String,
 
-    comments: [{ type: Schema.ObjectId, ref: 'Comment' }]//,
-    //created_by: { type: Schema.ObjectId, ref: 'User' },//req.paramas.user
+    comments: [{ type: Schema.ObjectId, ref: 'Comment' }],
+    created_by: { type: Schema.ObjectId, ref: 'User' },//req.paramas.user
 
-    //createdAt: { type: Date, default: Date.now }
-}
-, { versionKey: false });
+    createdAt: { type: Date, default: Date.now }
+}, { versionKey: false });
 
-const Post = mongoose.model('Post', PostSchema);
-module.exports = Post;
+module.exports = mongoose.model('Post', PostSchema);
