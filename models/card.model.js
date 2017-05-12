@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 //Card
-var PostSchema = new Schema({
+var CardSchema = new Schema({
     title: String,
 
     comments: [{ type: Schema.ObjectId, ref: 'Comment' }],
@@ -11,4 +11,4 @@ var PostSchema = new Schema({
     createdAt: { type: Date, default: Date.now }
 }, { versionKey: false });
 
-module.exports = mongoose.model('Post', PostSchema);
+module.exports = mongoose.model('Card', CardSchema);

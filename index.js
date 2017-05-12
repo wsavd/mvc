@@ -7,7 +7,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 var mongoose = require('mongoose');
 //var Book = require('./models/book.model');
 
-var db = 'localhost/123';
+var db = 'localhost/1234';
 mongoose.Promise = global.Promise;
 mongoose.connect(db);
 
